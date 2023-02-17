@@ -1,0 +1,65 @@
+@import "Theme";
+
+.Form {
+  @include flex;
+  width: 100%;
+  padding-bottom: 100px;
+
+  h2 {
+    width: 100%;
+    background-color: $primary;
+    color: $secondary;
+    font-size: 35px;
+    font-weight: bold;
+    text-align: center;
+    padding: 20px 0;
+  }
+
+  form {
+    @include flex;
+    width: 100%;
+    max-width: 400px;
+    padding: 10px;
+
+    label {
+      @include flex($ali: flex-start);
+      width: 100%;
+
+      p {
+        color: $labelText;
+        font-weight: bold;
+        font-size: 18px;
+      }
+
+      input {
+        width: 100%;
+        border: 2px solid $inputBorder;
+        border-radius: 5px;
+        letter-spacing: 1px;
+        padding: 5px;
+      }
+    }
+
+    input[type="submit"] {
+      width: 100%;
+      background-color: $primary;
+      color: $secondary;
+      font-weight: bold;
+      font-size: 18px;
+      border: 2px solid $primary;
+      border-radius: 8px;
+      padding: 5px;
+
+      &:hover {
+        background-color: $primaryHover;
+        border-color: $primaryHover;
+      }
+    }
+  }
+
+  a {
+    color: $secondary;
+    text-decoration: none;
+    text-align: center;
+  }
+}
