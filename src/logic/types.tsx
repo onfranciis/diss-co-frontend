@@ -26,9 +26,30 @@ export type LoginAction = {
   payload: string;
 };
 
+export type LoginType = {
+  setAuthToken: (Token: string, Username: string) => void;
+};
+
 // AXIOS
 export type axiosParameter = {
   url: string;
   method: string;
   data: FormData | initialLoginType;
+};
+
+// AUTHTOKEN
+export type authTokenType = {
+  Token: string | null;
+  Username: string | null;
+};
+
+// PROTECTED
+export type protectedType = {
+  Token: string | null;
+};
+
+// HOME
+export type homePropsType = {
+  authToken: authTokenType;
+  signOut: () => void;
 };
