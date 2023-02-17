@@ -1,16 +1,12 @@
 import Placeholder from "/placeholder.jpg";
 import "./styles/Home.scss";
 import { Link } from "react-router-dom";
+import { homePropsType } from "./logic/types";
 // import { FetchUser } from "./FetchUser";
 
-type homeProps = {
-  Token: string | null;
-  Username: string | null;
-  signOut: () => void;
-};
-
-const Home = () => {
-  return true ? (
+const Home = ({ authToken, signOut }: homePropsType) => {
+  const { Token, Username } = authToken;
+  return Token == null ? (
     <div className="HomeLoading">
       <p>Loading</p>
     </div>
@@ -19,7 +15,7 @@ const Home = () => {
       <div className="card">
         <p className="welcome">Welcome!</p>
         <img src="" alt="" height={100} width={100} />
-        <p className="user">John Doe</p>
+        <p className="user">{Username}</p>
       </div>
 
       <Link to="/login">
