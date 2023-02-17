@@ -1,0 +1,13 @@
+$primary: rgb(150, 217, 226);
+$secondary: rgb(11, 68, 75);
+$labelText: rgb(25, 118, 130);
+$inputBorder: rgb(113, 190, 200);
+$primaryHover: rgb(86, 170, 182);
+
+@mixin flex($dir: column, $jus: center, $ali: center, $gap: 5px) {
+  display: flex;
+  flex-direction: $dir;
+  justify-content: $jus;
+  align-items: $ali;
+  gap: $gap;
+}
