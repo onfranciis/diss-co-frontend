@@ -1,19 +1,34 @@
-import { ChangeEvent, FormEvent, useReducer } from "react";
+import { ChangeEvent, FormEvent, useReducer, useState } from "react";
 import { LoginReducer, initialLogin } from "./logic/loginReducer";
 import "./styles/Forms.scss";
+import { axiosRequest } from "./logic/requests";
+import { LoginType } from "./logic/types";
+import { Navigate } from "react-router-dom";
 
-const Login = () => {
+const Login = ({ setAuthToken }: LoginType) => {
+  const [received, setReceived] = useState<boolean>(false);
   const [form, setForm] = useReducer(LoginReducer, initialLogin);
+  const url = import.meta.env.VITE_LOGIN;
+  const method = "post";
+  const data = form;
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ type: e.currentTarget.name, payload: e.currentTarget.value });
   };
-  const handleSubmit = (e: FormEvent) => {
+
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(form);
+    const { status, message } = await axiosRequest({ url, method, data });
+    const { token, description } = await message;
+    if (status) {
+      setAuthToken(token, form.username);
+      setReceived(true);
+    }
   };
 
-  return (
+  return received ? (
+    <Navigate to="/" />
+  ) : (
     <div className="Form">
       <h2>Login</h2>
 
