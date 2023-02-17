@@ -25,3 +25,10 @@ export type LoginAction = {
   type: string;
   payload: string;
 };
+
+// AXIOS
+export type axiosParameter = {
+  url: string;
+  method: string;
+  data: FormData | initialLoginType;
+};
