@@ -9,9 +9,7 @@ const method = "post";
 
 const SignUp = () => {
   const [form, setForm] = useReducer(signUpReducer, initialSignUp);
-  const [imageURL, setImageURL] = useState<
-    (string | ArrayBuffer) | (string | Blob)
-  >("");
+  const [imageURL, setImageURL] = useState<string | (string | Blob)>("");
   const formData = new FormData();
   formData.append("name", form.name);
   formData.append("family", form.family);

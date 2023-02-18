@@ -1,11 +1,8 @@
-export const toBase64 = (
-  image: Blob,
-  fn: (data: string | ArrayBuffer) => void
-) => {
+export const toBase64 = (image: Blob, fn: (data: any) => void) => {
   const fileReader = new FileReader();
   fileReader.onload = () => {
     const srcData = fileReader.result;
-    fn(srcData!);
+    fn(srcData);
   };
 
   fileReader.readAsDataURL(image);
