@@ -1,10 +1,26 @@
-import { ChangeEvent, FormEvent, useReducer } from "react";
+import { ChangeEvent, FormEvent, useReducer, useState } from "react";
 import { initialSignUp, signUpReducer } from "./logic/signUpReducer";
 import "./styles/Forms.scss";
 import ImageInput from "./components/ImageInput";
+import { axiosRequest } from "./logic/requests";
+import { toBase64 } from "./logic/base64";
+const url = import.meta.env.VITE_SIGNUP;
+const method = "post";
 
 const SignUp = () => {
   const [form, setForm] = useReducer(signUpReducer, initialSignUp);
+  const [imageURL, setImageURL] = useState<
+    (string | ArrayBuffer) | (string | Blob)
+  >("");
+  const formData = new FormData();
+  formData.append("name", form.name);
+  formData.append("family", form.family);
+  formData.append("email", form.email);
+  formData.append("password", form.password);
+  formData.append("address", form.address);
+  formData.append("phoneNumber", form.phoneNumber);
+  formData.append("passportNumber", form.passportNumber);
+  formData.append("image", imageURL); // Ignore the typescript error
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ type: e.currentTarget.name, payload: e.currentTarget.value });
@@ -12,11 +28,12 @@ const SignUp = () => {
 
   const imageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const File = e.target.files![0];
+    toBase64(File, (data) => setImageURL(data));
   };
 
-  const handleSubmit = (e: FormEvent) => {
+  const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(form);
+    console.log(await axiosRequest({ url, method, data: formData }));
   };
 
   return (
