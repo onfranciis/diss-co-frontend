@@ -30,6 +30,13 @@ export type LoginType = {
   setAuthToken: (Token: string, Username: string) => void;
 };
 
+// HOME
+export type axiosUserParameter = {
+  url: string;
+  method: string;
+  data: { username: string };
+};
+
 // AXIOS
 export type axiosParameter = {
   url: string;
@@ -53,3 +60,6 @@ export type homePropsType = {
   authToken: authTokenType;
   signOut: () => void;
 };
+
+// IMAGE
+export type imageURLType = string | Blob | ArrayBuffer;
