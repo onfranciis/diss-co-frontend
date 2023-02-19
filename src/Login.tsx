@@ -4,10 +4,13 @@ import "./styles/Forms.scss";
 import { axiosRequest } from "./logic/requests";
 import { LoginType } from "./logic/types";
 import { Navigate } from "react-router-dom";
+import { useTranslationContext } from "./translations/translations";
+import LanguageDropdown from "./components/LanguageDropdown";
 
 const Login = ({ setAuthToken }: LoginType) => {
   const [received, setReceived] = useState<boolean>(false);
   const [form, setForm] = useReducer(LoginReducer, initialLogin);
+  const { language, setLanguage } = useTranslationContext();
   const url = import.meta.env.VITE_LOGIN;
   const method = "post";
   const data = form;
@@ -30,11 +33,11 @@ const Login = ({ setAuthToken }: LoginType) => {
     <Navigate to="/" />
   ) : (
     <div className="Form">
-      <h2>Login</h2>
+      <h2>{language.Login}</h2>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="username">
-          <p>Username</p>
+          <p>{language.Username}</p>
           <input
             type="text"
             value={form.username}
@@ -45,7 +48,7 @@ const Login = ({ setAuthToken }: LoginType) => {
         </label>
 
         <label htmlFor="password">
-          <p>Password</p>
+          <p>{language.Password}</p>
           <input
             type="password"
             value={form.password}
@@ -55,10 +58,11 @@ const Login = ({ setAuthToken }: LoginType) => {
           />
         </label>
 
-        <input type="submit" value="Login" />
+        <input type="submit" value={language.Login} />
       </form>
 
-      <a href="/signup">New user? Sign Up</a>
+      <a href="/signup">{language.NewUser}</a>
+      <LanguageDropdown onChange={(data) => setLanguage(data)} />
     </div>
   );
 };
