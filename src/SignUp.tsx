@@ -4,6 +4,12 @@ import "./styles/Forms.scss";
 import ImageInput from "./components/ImageInput";
 import { axiosRequest } from "./logic/requests";
 import { toBase64 } from "./logic/base64";
+import {
+  matchPasswords,
+  notEmpty,
+  validatePassportNumber,
+  validatePhoneNumber,
+} from "./logic/validation";
 const url = import.meta.env.VITE_SIGNUP;
 const method = "post";
 
@@ -18,7 +24,7 @@ const SignUp = () => {
   formData.append("address", form.address);
   formData.append("phoneNumber", form.phoneNumber);
   formData.append("passportNumber", form.passportNumber);
-  formData.append("image", imageURL); // Ignore the typescript error
+  formData.append("image", imageURL);
 
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     setForm({ type: e.currentTarget.name, payload: e.currentTarget.value });
@@ -26,12 +32,24 @@ const SignUp = () => {
 
   const imageChange = (e: ChangeEvent<HTMLInputElement>) => {
     const File = e.target.files![0];
-    toBase64(File, (data) => setImageURL(data));
+    toBase64(File, (data) => {
+      setImageURL(data);
+      setForm({ type: "image", payload: data });
+    });
   };
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    console.log(await axiosRequest({ url, method, data: formData }));
+    if (
+      notEmpty(form) &&
+      matchPasswords(form) &&
+      validatePhoneNumber(form) &&
+      validatePassportNumber(form)
+    ) {
+      console.log(await axiosRequest({ url, method, data: formData }));
+    } else {
+      console.error("Invalid Details");
+    }
   };
 
   return (
@@ -119,7 +137,7 @@ const SignUp = () => {
         <label htmlFor="passportNumber">
           <p>Passport Number</p>
           <input
-            type="number"
+            type="text"
             value={form.passportNumber}
             id="passportNumber"
             name="passportNumber"
