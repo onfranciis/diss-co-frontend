@@ -1,3 +1,5 @@
+import { english } from "../translations/english";
+
 // SIGN UP
 export type initialSignUpType = {
   name: string;
@@ -63,3 +65,11 @@ export type homePropsType = {
 
 // IMAGE
 export type imageURLType = string | Blob | ArrayBuffer;
+
+// TRANSLATION
+export type translationFileType = typeof english;
+
+export type TranslationContextType = {
+  language: translationFileType;
+  setLanguage: (data: string) => void;
+};
