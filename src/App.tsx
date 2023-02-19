@@ -5,40 +5,56 @@ import SignUp from "./SignUp";
 import Login from "./Login";
 import Home from "./Home";
 import { useState } from "react";
-import { authTokenType } from "./logic/types";
+import { authTokenType, translationFileType } from "./logic/types";
+import {
+  TranslationContext,
+  changeTranslationFile,
+} from "./translations/translations";
 
 function App() {
+  const [translation, setTranslation] = useState<translationFileType>(
+    changeTranslationFile("English")
+  );
+
   const [authToken, setAuthToken] = useState<authTokenType>({
     Token: null,
     Username: null,
   });
+
   return (
-    <Router>
-      <Routes>
-        <Route element={<Protected Token={authToken.Token} />}>
+    <TranslationContext.Provider
+      value={{
+        language: translation,
+        setLanguage: (data) => setTranslation(changeTranslationFile(data)),
+      }}
+    >
+      <Router>
+        <Routes>
+          <Route element={<Protected Token={authToken.Token} />}>
+            <Route
+              path="/"
+              element={
+                <Home
+                  authToken={authToken}
+                  signOut={() => setAuthToken({ Token: null, Username: null })}
+                />
+              }
+            />
+          </Route>
+          <Route path="/signup" element={<SignUp />} />
           <Route
-            path="/"
+            path="/login"
             element={
-              <Home
-                authToken={authToken}
-                signOut={() => setAuthToken({ Token: null, Username: null })}
+              <Login
+                setAuthToken={(Token, Username) => {
+                  setAuthToken({ Token, Username });
+                }}
               />
             }
           />
-        </Route>
-        <Route path="/signup" element={<SignUp />} />
-        <Route
-          path="/login"
-          element={
-            <Login
-              setAuthToken={(Token, Username) => {
-                setAuthToken({ Token, Username });
-              }}
-            />
-          }
-        />
-      </Routes>
-    </Router>
+        </Routes>
+      </Router>
+    </TranslationContext.Provider>
   );
 }
 
