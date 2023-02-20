@@ -17,8 +17,6 @@ const LanguageDropdown = ({
     >
       <option value="English">English</option>
       <option value="Spanish">Spanish</option>
-      <option value="French">French</option>
-      <option value="Chineese">Chineese</option>
     </select>
   );
 };
