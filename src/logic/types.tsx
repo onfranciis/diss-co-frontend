@@ -1,5 +1,3 @@
-import { english } from "../translations/english";
-
 // SIGN UP
 export type initialSignUpType = {
   name: string;
@@ -67,7 +65,23 @@ export type homePropsType = {
 export type imageURLType = string | Blob | ArrayBuffer;
 
 // TRANSLATION
-export type translationFileType = typeof english;
+export type translationFileType = {
+  username: string;
+  Login: string;
+  Username: string;
+  Password: string;
+  NewUser: string;
+
+  Name: string;
+  Family: string;
+  Email: string;
+  RepeatPassword: string;
+  Address: string;
+  phoneNumber: string;
+  passportNumber: string;
+  SignUp: string;
+  Already: string;
+};
 
 export type TranslationContextType = {
   language: translationFileType;
