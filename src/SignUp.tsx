@@ -10,11 +10,14 @@ import {
   validatePassportNumber,
   validatePhoneNumber,
 } from "./logic/validation";
+import { useTranslationContext } from "./translations/translations";
+import LanguageDropdown from "./components/LanguageDropdown";
 const url = import.meta.env.VITE_SIGNUP;
 const method = "post";
 
 const SignUp = () => {
   const [form, setForm] = useReducer(signUpReducer, initialSignUp);
+  const { language, setLanguage } = useTranslationContext();
   const [imageURL, setImageURL] = useState<string | (string | Blob)>("");
   const formData = new FormData();
   formData.append("name", form.name);
@@ -54,11 +57,11 @@ const SignUp = () => {
 
   return (
     <div className="Form">
-      <h2>Sign Up</h2>
+      <h2>{language.SignUp}</h2>
 
       <form onSubmit={handleSubmit}>
         <label htmlFor="name">
-          <p>Name</p>
+          <p>{language.Name}</p>
           <input
             type="text"
             value={form.name}
@@ -69,7 +72,7 @@ const SignUp = () => {
         </label>
 
         <label htmlFor="family">
-          <p>Family</p>
+          <p>{language.Family}</p>
           <input
             type="text"
             value={form.family}
@@ -80,7 +83,7 @@ const SignUp = () => {
         </label>
 
         <label htmlFor="email">
-          <p>Email</p>
+          <p>{language.Email}</p>
           <input
             type="email"
             value={form.email}
@@ -91,7 +94,7 @@ const SignUp = () => {
         </label>
 
         <label htmlFor="password">
-          <p>Password</p>
+          <p>{language.Password}</p>
           <input
             type="password"
             value={form.password}
@@ -102,7 +105,7 @@ const SignUp = () => {
         </label>
 
         <label htmlFor="repeatPassword">
-          <p>Repeat Password</p>
+          <p>{language.RepeatPassword}</p>
           <input
             type="password"
             value={form.repeatPassword}
@@ -113,7 +116,7 @@ const SignUp = () => {
         </label>
 
         <label htmlFor="address">
-          <p>Address</p>
+          <p>{language.Address}</p>
           <input
             type="address"
             value={form.address}
@@ -124,7 +127,7 @@ const SignUp = () => {
         </label>
 
         <label htmlFor="phoneNumber">
-          <p>Phone Number</p>
+          <p>{language.phoneNumber}</p>
           <input
             type="tel"
             value={form.phoneNumber}
@@ -135,7 +138,7 @@ const SignUp = () => {
         </label>
 
         <label htmlFor="passportNumber">
-          <p>Passport Number</p>
+          <p>{language.passportNumber}</p>
           <input
             type="text"
             value={form.passportNumber}
@@ -147,10 +150,11 @@ const SignUp = () => {
 
         <ImageInput onImageChange={imageChange} />
 
-        <input type="submit" value="Sign Up" />
+        <input type="submit" value={language.SignUp} />
       </form>
 
-      <a href="/login">Already have an account? Login</a>
+      <a href="/login">{language.Already}</a>
+      <LanguageDropdown onChange={(data) => setLanguage(data)} />
     </div>
   );
 };
