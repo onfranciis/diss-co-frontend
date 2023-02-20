@@ -1,0 +1,17 @@
+ {
+  "username": "username",
+  "Login": "Login",
+  "Username": "Username",
+  "Password": "Password",
+  "NewUser": "New user? Sign Up",
+
+  "Name": "Name",
+  "Family": "Family",
+  "Email": "Email",
+  "RepeatPassword": "Repeat Password",
+  "Address": "Address",
+  "phoneNumber": "Phone Number",
+  "passportNumber": "Passport Number",
+  "SignUp": "Sign Up",
+  "Already": "Already have an account? Login"
+}

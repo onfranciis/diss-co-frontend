@@ -1,0 +1,17 @@
+{
+  "username": "nombre de usuario",
+  "Login": "Acceso",
+  "Username": "Nombre de usuario",
+  "Password": "Contraseña",
+  "NewUser": "¿Nuevo Usuario? Inscribirse",
+
+  "Name": "Nombre",
+  "Family": "Familia",
+  "Email": "Correo electrónico",
+  "RepeatPassword": "Repita la contraseña",
+  "Address": "Dirección",
+  "phoneNumber": "Número de teléfono",
+  "passportNumber": "Número de teléfono",
+  "SignUp": "Inscribirse",
+  "Already": "¿Ya tienes una cuenta? Acceso"
+}
