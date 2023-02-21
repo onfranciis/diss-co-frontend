@@ -14,7 +14,7 @@ const Home = ({ authToken, signOut }: homePropsType) => {
   axiosUserRequest({
     url,
     method,
-    data: { username: Username! },
+    data: { username: Username!, token: Token },
   }).then((res) => {
     setImage(res.image);
     setName(res.name);
