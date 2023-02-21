@@ -32,6 +32,9 @@ export const axiosUserRequest = async ({
     url,
     method,
     data,
+    headers: {
+      Authorization: `Bearer ${data.token}`,
+    },
   };
 
   return await axios(config)
