@@ -34,7 +34,7 @@ export type LoginType = {
 export type axiosUserParameter = {
   url: string;
   method: string;
-  data: { username: string };
+  data: { username: string; token: string | null };
 };
 
 // AXIOS
