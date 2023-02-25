@@ -12,12 +12,21 @@ import {
 } from "./logic/validation";
 import { useTranslationContext } from "./translations/translations";
 import LanguageDropdown from "./components/LanguageDropdown";
+import Notification from "./components/Notification";
+import { NotificationType } from "./logic/types";
+import { clearSignUp } from "./logic/clearForm";
 const url = import.meta.env.VITE_SIGNUP;
 const method = "post";
 
 const SignUp = () => {
   const [form, setForm] = useReducer(signUpReducer, initialSignUp);
   const { language, setLanguage } = useTranslationContext();
+  const [loading, setLoading] = useState(false);
+  const [notification, setNotification] = useState<NotificationType["config"]>({
+    display: false,
+    status: "",
+    message: "",
+  });
   const [imageURL, setImageURL] = useState<string | (string | Blob)>("");
   const formData = new FormData();
   formData.append("name", form.name);
@@ -43,20 +52,43 @@ const SignUp = () => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
+    if (notification.display) console.log("Exists");
     if (
       notEmpty(form) &&
       matchPasswords(form) &&
       validatePhoneNumber(form) &&
-      validatePassportNumber(form)
+      validatePassportNumber(form) &&
+      imageURL !== ""
     ) {
-      console.log(await axiosRequest({ url, method, data: formData }));
+      setLoading(true);
+      const { data } = await axiosRequest({ url, method, data: formData });
+      if (data?.status) {
+        setLoading(false);
+        clearSignUp(form, setForm);
+        setImageURL("");
+        setNotification({
+          display: true,
+          status: "Success",
+          message: data.message.Description,
+        });
+      }
     } else {
-      console.error("Invalid Details");
+      setNotification({
+        ...notification,
+        display: true,
+        status: "Error",
+      });
     }
   };
 
   return (
     <div className="Form">
+      <Notification
+        config={notification}
+        form={form}
+        image={imageURL}
+        closeModal={() => setNotification({ ...notification, display: false })}
+      />
       <h2>{language.SignUp}</h2>
 
       <form onSubmit={handleSubmit}>
@@ -150,7 +182,7 @@ const SignUp = () => {
 
         <ImageInput onImageChange={imageChange} />
 
-        <input type="submit" value={language.SignUp} />
+        <input type="submit" value={language.SignUp} disabled={loading} />
       </form>
 
       <a href="/login">{language.Already}</a>
