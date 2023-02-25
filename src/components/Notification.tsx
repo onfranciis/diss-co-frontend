@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { NotificationType } from "../logic/types";
+import { NotificationLoginType, NotificationType } from "../logic/types";
 import {
   matchPasswords,
   validatePassportNumber,
@@ -129,4 +129,49 @@ const Notification = ({
   );
 };
 
-export default Notification;
+const NotificationLogin = ({
+  config,
+  closeModal,
+  form,
+}: NotificationLoginType) => {
+  return (
+    <div
+      className="NotificationParent"
+      onClick={closeModal}
+      style={{ display: config.display ? "flex" : "none" }}
+    >
+      <div className="Notification">
+        {config.status == "Error" && (
+          <div className="Requirements">
+            <p>
+              <span
+                style={{
+                  backgroundColor: form.username == "" ? "red" : "green",
+                }}
+              ></span>{" "}
+              Username is not empty
+            </p>
+            <p>
+              <span
+                style={{
+                  backgroundColor: form.password == "" ? "red" : "green",
+                }}
+              ></span>{" "}
+              Password is not empty
+            </p>
+          </div>
+        )}
+
+        {config.status == "LoginError" && (
+          <p className="Success">
+            Username or Password not found! <br />
+            You can <Link to="/signup">Sign Up</Link> if you don't have an
+            account.
+          </p>
+        )}
+      </div>
+    </div>
+  );
+};
+
+export { Notification, NotificationLogin };
