@@ -2,15 +2,21 @@ import { ChangeEvent, FormEvent, useReducer, useState } from "react";
 import { LoginReducer, initialLogin } from "./logic/loginReducer";
 import "./styles/Forms.scss";
 import { axiosRequest } from "./logic/requests";
-import { LoginType } from "./logic/types";
+import { LoginType, NotificationType } from "./logic/types";
 import { Navigate } from "react-router-dom";
 import { useTranslationContext } from "./translations/translations";
 import LanguageDropdown from "./components/LanguageDropdown";
+import { NotificationLogin } from "./components/Notification";
 
 const Login = ({ setAuthToken }: LoginType) => {
   const [received, setReceived] = useState<boolean>(false);
   const [form, setForm] = useReducer(LoginReducer, initialLogin);
   const { language, setLanguage } = useTranslationContext();
+  const [notification, setNotification] = useState<NotificationType["config"]>({
+    display: false,
+    status: "",
+    message: "",
+  });
   const url = import.meta.env.VITE_LOGIN;
   const method = "post";
   const data = form;
@@ -21,11 +27,29 @@ const Login = ({ setAuthToken }: LoginType) => {
 
   const handleSubmit = async (e: FormEvent) => {
     e.preventDefault();
-    const { status, message } = await axiosRequest({ url, method, data });
-    const { token, description } = await message;
-    if (status) {
-      setAuthToken(token, form.username);
-      setReceived(true);
+    if (form.username == "" || form.password == "") {
+      setNotification({
+        ...notification,
+        display: true,
+        status: "Error",
+      });
+    } else {
+      const { status, code, message } = await axiosRequest({
+        url,
+        method,
+        data,
+      });
+      const { token, description } = await message;
+      if (status) {
+        setAuthToken(token, form.username);
+        setReceived(true);
+      } else {
+        setNotification({
+          ...notification,
+          display: true,
+          status: "LoginError",
+        });
+      }
     }
   };
 
@@ -33,6 +57,11 @@ const Login = ({ setAuthToken }: LoginType) => {
     <Navigate to="/" />
   ) : (
     <div className="Form">
+      <NotificationLogin
+        config={notification}
+        form={form}
+        closeModal={() => setNotification({ ...notification, display: false })}
+      />
       <h2>{language.Login}</h2>
 
       <form onSubmit={handleSubmit}>
