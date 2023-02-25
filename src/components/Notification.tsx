@@ -1,5 +1,5 @@
 import { Link } from "react-router-dom";
-import { NotificationLoginType, NotificationType } from "../logic/types";
+import { NotificationLoginType, NotificationSignUpType } from "../logic/types";
 import {
   matchPasswords,
   validatePassportNumber,
@@ -7,12 +7,12 @@ import {
 } from "../logic/validation";
 import "../styles/Notification.scss";
 
-const Notification = ({
+const NotificationSignUp = ({
   config,
   closeModal,
   form,
   image,
-}: NotificationType) => {
+}: NotificationSignUpType) => {
   return (
     <div
       className="NotificationParent"
@@ -174,4 +174,4 @@ const NotificationLogin = ({
   );
 };
 
-export { Notification, NotificationLogin };
+export { NotificationSignUp, NotificationLogin };

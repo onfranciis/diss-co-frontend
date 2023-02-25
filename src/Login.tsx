@@ -2,7 +2,7 @@ import { ChangeEvent, FormEvent, useReducer, useState } from "react";
 import { LoginReducer, initialLogin } from "./logic/loginReducer";
 import "./styles/Forms.scss";
 import { axiosRequest } from "./logic/requests";
-import { LoginType, NotificationType } from "./logic/types";
+import { LoginType, NotificationLoginType } from "./logic/types";
 import { Navigate } from "react-router-dom";
 import { useTranslationContext } from "./translations/translations";
 import LanguageDropdown from "./components/LanguageDropdown";
@@ -12,7 +12,9 @@ const Login = ({ setAuthToken }: LoginType) => {
   const [received, setReceived] = useState<boolean>(false);
   const [form, setForm] = useReducer(LoginReducer, initialLogin);
   const { language, setLanguage } = useTranslationContext();
-  const [notification, setNotification] = useState<NotificationType["config"]>({
+  const [notification, setNotification] = useState<
+    NotificationLoginType["config"]
+  >({
     display: false,
     status: "",
     message: "",

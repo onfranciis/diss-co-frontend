@@ -12,8 +12,8 @@ import {
 } from "./logic/validation";
 import { useTranslationContext } from "./translations/translations";
 import LanguageDropdown from "./components/LanguageDropdown";
-import Notification from "./components/Notification";
-import { NotificationType } from "./logic/types";
+import { NotificationSignUp } from "./components/Notification";
+import { NotificationSignUpType } from "./logic/types";
 import { clearSignUp } from "./logic/clearForm";
 const url = import.meta.env.VITE_SIGNUP;
 const method = "post";
@@ -22,7 +22,9 @@ const SignUp = () => {
   const [form, setForm] = useReducer(signUpReducer, initialSignUp);
   const { language, setLanguage } = useTranslationContext();
   const [loading, setLoading] = useState(false);
-  const [notification, setNotification] = useState<NotificationType["config"]>({
+  const [notification, setNotification] = useState<
+    NotificationSignUpType["config"]
+  >({
     display: false,
     status: "",
     message: "",
@@ -83,7 +85,7 @@ const SignUp = () => {
 
   return (
     <div className="Form">
-      <Notification
+      <NotificationSignUp
         config={notification}
         form={form}
         image={imageURL}

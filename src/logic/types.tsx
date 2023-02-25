@@ -89,7 +89,7 @@ export type TranslationContextType = {
 };
 
 // NOTIFICATION
-export type NotificationType = {
+export type NotificationSignUpType = {
   config: {
     display: boolean;
     status: string;
