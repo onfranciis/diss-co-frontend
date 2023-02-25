@@ -99,3 +99,13 @@ export type NotificationType = {
   form: initialSignUpType;
   image: Blob | string;
 };
+
+export type NotificationLoginType = {
+  config: {
+    display: boolean;
+    status: string;
+    message: string;
+  };
+  closeModal: () => void;
+  form: initialLoginType;
+};
