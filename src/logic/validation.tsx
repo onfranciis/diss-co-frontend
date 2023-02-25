@@ -10,7 +10,9 @@ export const matchPasswords = (data: initialSignUpType) => {
 
 export const validatePhoneNumber = (data: initialSignUpType) => {
   const first =
-    data.phoneNumber.slice(0, 1) == "+" ? "" : data.phoneNumber.slice(0, 1);
+    data.phoneNumber.slice(0, 1) == "+" || data.phoneNumber.slice(0, 1) == "0"
+      ? ""
+      : data.phoneNumber.slice(0, 1);
   const second = data.phoneNumber.slice(1);
   const fullNumber = `${first}${second}`;
   return parseInt(fullNumber).toString() == fullNumber;
