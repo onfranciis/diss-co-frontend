@@ -87,3 +87,15 @@ export type TranslationContextType = {
   language: translationFileType;
   setLanguage: (data: string) => void;
 };
+
+// NOTIFICATION
+export type NotificationType = {
+  config: {
+    display: boolean;
+    status: string;
+    message: string;
+  };
+  closeModal: () => void;
+  form: initialSignUpType;
+  image: Blob | string;
+};
