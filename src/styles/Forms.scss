@@ -63,3 +63,42 @@
     text-align: center;
   }
 }
+
+.LoadingBg {
+  height: 100vh;
+  width: 100vw;
+  background-color: rgba(0, 0, 0, 0.768);
+  color: rgb(176, 238, 246);
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  font-size: 150px;
+  position: fixed;
+  top: 0;
+  z-index: 2;
+  padding: 50px 0;
+
+  &::after {
+    content: "";
+    position: absolute;
+    animation: Loading infinite 3s linear;
+  }
+
+  @keyframes Loading {
+    0% {
+      content: "";
+    }
+    25% {
+      content: ".";
+    }
+    50% {
+      content: "..";
+    }
+    75% {
+      content: "...";
+    }
+    90% {
+      content: "";
+    }
+  }
+}

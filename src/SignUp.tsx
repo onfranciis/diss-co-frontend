@@ -75,6 +75,7 @@ const SignUp = () => {
         });
       }
     } else {
+      setLoading(false);
       setNotification({
         ...notification,
         display: true,
@@ -91,6 +92,7 @@ const SignUp = () => {
         image={imageURL}
         closeModal={() => setNotification({ ...notification, display: false })}
       />
+      {loading && <div className="LoadingBg"></div>}
       <h2>{language.SignUp}</h2>
 
       <form onSubmit={handleSubmit}>
