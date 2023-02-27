@@ -4,14 +4,12 @@ import placeholder from "/addImage.svg";
 
 type ImageInputProps = {
   onImageChange: (e: ChangeEvent<HTMLInputElement>) => void;
+  imageURL: string | (string | Blob);
 };
 
-const ImageInput = ({ onImageChange }: ImageInputProps) => {
-  const [imageURL, setImageURL] = useState("");
-
+const ImageInput = ({ onImageChange, imageURL }: ImageInputProps) => {
   const handleChange = (e: ChangeEvent<HTMLInputElement>) => {
     onImageChange(e);
-    setImageURL(URL.createObjectURL(e.currentTarget.files![0]));
   };
 
   return (

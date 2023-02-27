@@ -184,7 +184,7 @@ const SignUp = () => {
           />
         </label>
 
-        <ImageInput onImageChange={imageChange} />
+        <ImageInput onImageChange={imageChange} imageURL={imageURL} />
 
         <input type="submit" value={language.SignUp} disabled={loading} />
       </form>
